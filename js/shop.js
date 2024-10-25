@@ -112,14 +112,49 @@ function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     total=0;
     for(i=0;i<cart.length;i++){
-        total += cart[i].price*cart[i].quantity;  
+        return total += cart[i].price*cart[i].quantity;  
     }
-    // console.log("total = "+total); 
+    console.log("total = "+total+"€"); 
 }
 
 // Exercise 4
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+
+    
+    let precioProductoConDescuento = 0; //precio del producto que tiene descuento
+
+    for(let productoDeCarrito of cart){
+        
+        productoDeCarrito.subtotalWithDiscount = 0;//precio final del producto con descuento 
+
+        if(productoDeCarrito.offer){
+            if((productoDeCarrito.name == "cooking oil" && productoDeCarrito.quantity >=3) || (productoDeCarrito.name == "Instant cupcake mixture" && productoDeCarrito.quantity >=10) ){
+
+                //conocer el precio del producto que tiene descuento * las cantidades compradas
+                precioProductoConDescuento = productoDeCarrito.price*productoDeCarrito.quantity;
+
+                
+                productoDeCarrito.subtotalWithDiscount = precioProductoConDescuento - (precioProductoConDescuento*productoDeCarrito.offer.percent/100);
+
+                console.log("% de descuento: "+productoDeCarrito.offer.percent);
+
+                
+            }
+            console.log("precio de los productos con descuento:") 
+            console.log("precio del mismo producto:" +precioProductoConDescuento);
+            console.log("se queda en: " +productoDeCarrito.subtotalWithDiscount+"€");
+            
+            total -=precioProductoConDescuento;
+            return total += productoDeCarrito.subtotalWithDiscount;
+        }
+        else{
+            console.log("estos productos no tiene descuento");
+        }
+        
+            
+    }
+    console.log("total final con descuentos aplicados a los productos pertientes = "+total + "€");
 }
 
 // Exercise 5
