@@ -78,6 +78,30 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array
+    for(let object of products){
+        if(object.id == id){
+            //compruebo si producto está en carrito o no
+            const productoEnCarrito = cart.find(item => item.id === object.id);
+            if(productoEnCarrito){
+                productoEnCarrito.quantity +=1;
+            }
+            else{
+                object = {quantity: 1, ...object}
+                console.log("cantidad "+object.name+"= "+object.quantity);
+                console.log("mi objeto "+object.name+" al carrito.")
+                cart.push(object);
+            }
+            
+        }
+    }
+    //si carrito NO está vacío
+    if(cart.length != 0){
+        console.table(cart);
+    }
+    //si está vacío
+    else{console.log("carrito vacío")}
+    
+    
 }
 
 // Exercise 2
