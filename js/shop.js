@@ -106,7 +106,7 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-
+    cart.length=0;
 }
 
 // Exercise 3
