@@ -100,8 +100,6 @@ function buy(id) {
     }
     //si está vacío
     else{console.log("carrito vacío")}
-    
-    
 }
 
 // Exercise 2
@@ -112,6 +110,11 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    total=0;
+    for(i=0;i<cart.length;i++){
+        total += cart[i].price*cart[i].quantity;  
+    }
+    // console.log("total = "+total); 
 }
 
 // Exercise 4
