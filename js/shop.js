@@ -110,9 +110,9 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    total=0;
+    // total=0;
     for(i=0;i<cart.length;i++){
-        return total += cart[i].price*cart[i].quantity;  
+        console.log(total += cart[i].price*cart[i].quantity);  
     }
     console.log("total = "+total+"€"); 
 }
@@ -121,6 +121,7 @@ function calculateTotal() {
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
 
+    calculateTotal();
     
     let precioProductoConDescuento = 0; //precio del producto que tiene descuento
 
@@ -146,7 +147,7 @@ function applyPromotionsCart() {
             console.log("se queda en: " +productoDeCarrito.subtotalWithDiscount+"€");
             
             total -=precioProductoConDescuento;
-            return total += productoDeCarrito.subtotalWithDiscount;
+            total += productoDeCarrito.subtotalWithDiscount;
         }
         else{
             console.log("estos productos no tiene descuento");
@@ -157,9 +158,62 @@ function applyPromotionsCart() {
     console.log("total final con descuentos aplicados a los productos pertientes = "+total + "€");
 }
 
+
 // Exercise 5
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+
+    applyPromotionsCart();
+
+    const tabla = document.getElementById("cart_list");
+    const precioTotal = document.getElementById("total_price");
+    console.table(cart);
+    //eliminamos filas ya hechas de la tabla
+    tabla.replaceChildren(); 
+
+    if(cart.length != 0){
+        for(const productos of cart){
+            if(tabla){
+                
+                //creamos filas hy elementos nuevos
+                const row = document.createElement("tr");
+                
+                const nombreProducto = document.createElement("th");
+                nombreProducto.textContent  = productos.name;
+
+                const precioProducto = document.createElement("td");
+                precioProducto.textContent  = productos.price;
+
+                const cantidadProducto = document.createElement("td");
+                cantidadProducto.textContent  = productos.quantity;
+
+                const precioDescuentoProducto = document.createElement("td");
+                precioDescuentoProducto.textContent  = productos.subtotalWithDiscount;
+                
+
+                //añadimos las filas a la tabla
+                tabla.appendChild(row);
+                //añadimos las columnas a las filas
+                row.appendChild(nombreProducto);
+                row.appendChild(precioProducto);
+                row.appendChild(cantidadProducto);
+                row.appendChild(precioDescuentoProducto);
+                if(!productos.offer){
+                    precioDescuentoProducto.textContent  = productos.price*productos.quantity;
+                }
+
+                precioTotal.innerText = total;
+             
+            }
+            else console.log("tabla no inicializada");
+            
+        }
+    }
+    else console.log("carrito vacío");
+    
+    // cart.forEach(product => {
+        
+    // });
 }
 
 
