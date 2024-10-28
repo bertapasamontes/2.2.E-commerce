@@ -198,7 +198,7 @@ function printCart() {
                 row.appendChild(precioProducto);
                 row.appendChild(cantidadProducto);
                 row.appendChild(precioDescuentoProducto);
-                if(!productos.offer){
+                if(!productos.subtotalWithDiscount){
                     precioDescuentoProducto.textContent  = productos.price*productos.quantity;
                 }
 
@@ -221,7 +221,21 @@ function printCart() {
 
 // Exercise 7
 function removeFromCart(id) {
-
+    for(let object of cart){
+        if(object.id == id){
+            //compruebo si producto está en carrito o no
+            const productoEnCarrito = cart.find(item => item.id === object.id);
+            if(productoEnCarrito){
+                productoEnCarrito.quantity--;
+            }
+            if(productoEnCarrito.quantity==0){
+                cart.pop(productoEnCarrito);
+            }
+            
+        }
+    }
+    total=0;
+    printCart();
 }
 
 function open_modal() {
