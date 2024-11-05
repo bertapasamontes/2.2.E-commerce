@@ -76,14 +76,12 @@ var total = 0;
 
 // Exercise 1
 function buy(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array
     for(let object of products){
         if(object.id == id){
             //compruebo si producto está en carrito o no
             const productoEnCarrito = cart.find(item => item.id === object.id);
             if(productoEnCarrito){
-                productoEnCarrito.quantity +=1;
+                productoEnCarrito.quantity++;
             }
             else{
                 object = {quantity: 1, ...object}
@@ -97,19 +95,33 @@ function buy(id) {
     //si carrito NO está vacío
     if(cart.length != 0){
         console.table(cart);
+
+        const cantidadProductos = document.getElementById("count_product");
+        cantidadProductos.textContent = cart.length;
     }
     //si está vacío
-    else{console.log("carrito vacío")}
+    else{
+        total = 0;
+        console.log("carrito vacío")}
+
+    printCart();
+    console.log("nuevo porducto agregado");
 }
 
 // Exercise 2
 function cleanCart() {
     cart.length=0;
+    total = 0;
+    const tabla = document.getElementById("cart_list");
+    const precioTotal = document.getElementById("total_price");
+    precioTotal.innerText = total;
+    tabla.replaceChildren();
+
 }
 
 // Exercise 3
 function calculateTotal() {
-    // Calculate total price of the cart using the "cartList" array
+
     // total=0;
     for(i=0;i<cart.length;i++){
         console.log(total += cart[i].price*cart[i].quantity);  
@@ -161,8 +173,7 @@ function applyPromotionsCart() {
 
 // Exercise 5
 function printCart() {
-    // Fill the shopping cart modal manipulating the shopping cart dom
-
+    total=0;
     applyPromotionsCart();
 
     const tabla = document.getElementById("cart_list");
@@ -191,6 +202,24 @@ function printCart() {
                 precioDescuentoProducto.textContent  = productos.subtotalWithDiscount;
                 
 
+                const buttonSumar = document.createElement("button");
+                buttonSumar.classList.add('btn','btn-outline-dark');
+                buttonSumar.textContent = "+";
+                buttonSumar.addEventListener("click", add)
+
+                function add(){
+                    buy(productos.id);
+                }
+
+                const buttonRestar = document.createElement("button");
+                buttonRestar.classList.add('btn','btn-outline-dark');
+                buttonRestar.textContent = "-";
+                buttonRestar.addEventListener("click", rest)
+
+                function rest(){
+                    removeFromCart(productos.id);
+                }
+
                 //añadimos las filas a la tabla
                 tabla.appendChild(row);
                 //añadimos las columnas a las filas
@@ -201,21 +230,118 @@ function printCart() {
                 if(!productos.subtotalWithDiscount){
                     precioDescuentoProducto.textContent  = productos.price*productos.quantity;
                 }
+                row.appendChild(buttonRestar);
+                row.appendChild(cantidadProducto);
+               
+                row.appendChild(buttonSumar);
 
+                console.log(total);
                 precioTotal.innerText = total;
              
             }
             else console.log("tabla no inicializada");
+
+            
             
         }
     }
-    else console.log("carrito vacío");
-    
-    // cart.forEach(product => {
-        
-    // });
+    else {
+        precioTotal.innerText = 0;
+        console.log("carrito vacío");
+    }
 }
 
+
+function printButtons(id){
+   
+    const carrito = document.getElementById(`carrito-id-${id}`);
+    total=0;
+    applyPromotionsCart();
+    const botonesEnCards = document.querySelector(`.add-al-carrito-id-${id}`);
+    
+    botonesEnCards.replaceChildren();
+    carrito.style.display = "none";
+
+
+    for(const productos of cart){ 
+        if(productos.id === id){
+            //creamos botones de sumar y restar cantidades
+            const row = document.createElement("div");
+            const cantidadProducto = document.createElement("span");
+            cantidadProducto.setAttribute("id", `quantity-${productos.id}`);
+            cantidadProducto.textContent  = productos.quantity;
+
+            //boton sumar
+            const buttonSumar = document.createElement("button");
+            buttonSumar.classList.add('btn','btn-primary', 'ms-2');
+            buttonSumar.textContent = "+";
+            buttonSumar.addEventListener("click", add)
+
+            function add(){
+                buy(productos.id);
+                printButtons(productos.id);
+            }
+
+            //boton restar
+            const buttonRestar = document.createElement("button");
+            buttonRestar.textContent = "-";
+            buttonRestar.addEventListener("click", rest)
+            buttonRestar.classList.add('btn','btn-primary', 'me-2');
+
+            function rest(){
+                removeFromCart(productos.id);
+                printButtons(productos.id);
+                
+            }
+
+            //añadimos las filas a la carta
+            row.appendChild(buttonRestar);
+            row.appendChild(cantidadProducto);
+            row.appendChild(buttonSumar);
+            botonesEnCards.appendChild(row);
+
+
+            const ayuda = document.createElement("div");
+            ayuda.textContent = "se fué";
+           
+            //mostrar y ocultar boton carrito
+            if (productos.quantity === 0) {
+
+                console.log("se ha perdido el rpoducto");
+                carrito.style.display = "block";
+                botonesEnCards.style.display = "none"; 
+                // row.appendChild(ayuda);
+                // botonesEnCards.replaceChildren();
+               
+            } 
+            else {
+               console.log("todo ok");
+            }   
+        }           
+            
+            
+    }
+    if(cart.length === 0){
+        //reaparecer boton carrito
+        carrito.style.display = "block";
+        console.log("se ha perdido el producto_2");
+    }
+}
+function updateQuantityDisplay(productoId) {
+    const producto = cart.find((producto) => producto.id === productoId);
+
+    //plantilla de literales que pone quantity+el Id del producto
+    const cantidadProducto = document.getElementById(`quantity-${productoId}`);
+    if (producto && cantidadProducto) {
+        cantidadProducto.textContent = producto.quantity;
+    }
+    
+}
+
+function printAll(id){
+    buy(id);
+    printButtons(id);
+}
 
 // ** Nivell II **
 
@@ -234,7 +360,8 @@ function removeFromCart(id) {
             
         }
     }
-    total=0;
+    // total=0;
+    console.log("borrado");
     printCart();
 }
 

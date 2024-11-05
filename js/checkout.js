@@ -96,6 +96,7 @@ function validate(event) {
 	}	 
 	if(!soloNums.test(fPhone.value)){
 		fPhone.classList.add("is-invalid");
+		errorPhone.innerText = "Por favor, usa solo números al introducir tu número de telefono";
 	}
 
 

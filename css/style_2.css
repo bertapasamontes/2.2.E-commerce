@@ -1,0 +1,63 @@
+.custom-banner {
+  background-image: url("../images/supermarket_2.jpg") !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: scroll;
+  background-size: cover;
+  border-radius: 20px;
+
+  margin: 5% 2% 0% 2%;
+}
+body{
+    font-family:'Poppins'; 
+}
+h2 {
+  margin-left: 20%;
+}
+
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+}
+.card-image{
+    border-radius: 15px;
+}
+
+.btn {
+  border-radius: 10px;
+}
+.modal-dialog {
+  max-width: 600px;
+}
+
+.bord {
+  border: 1.5px solid black;
+  border-radius: 20px;
+}
+.btn-primary{
+    background-color: #ffd43b;
+    color: #121212;
+    &:hover{
+        background-color: #121212;
+    }
+}
+/* .btn-secondary{
+    background-color: #d1aa55;
+} */
+
+//tablet
+@media (min-width: 576px, max-width:800px;) {
+  h2 {
+    margin-left: 1%;
+  }
+  .custom-banner {
+    background-image: none;
+    background-color: #ffd43b;
+  }
+}
+//mobile
+@media (max-width: 576px) {
+  h2 {
+    margin-left: 5%;
+  }
+}
