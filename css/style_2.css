@@ -1,4 +1,5 @@
 .custom-banner {
+  background-color:white;
   background-image: url("../images/supermarket_2.jpg") !important;
   background-repeat: no-repeat;
   background-position: center;
@@ -21,6 +22,7 @@ h2 {
 }
 .card-image{
     border-radius: 15px;
+    max-height: fit-content;
 }
 
 .btn {

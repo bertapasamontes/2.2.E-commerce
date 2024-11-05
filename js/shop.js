@@ -74,8 +74,16 @@ var cart = [];
 
 var total = 0;
 
+//variables del doc
+const cantidadProductos = document.getElementById("count_product");
+const tabla = document.getElementById("cart_list");
+const precioTotal = document.getElementById("total_price");
+
+
+
 // Exercise 1
 function buy(id) {
+    
     for(let object of products){
         if(object.id == id){
             //compruebo si producto está en carrito o no
@@ -95,25 +103,23 @@ function buy(id) {
     //si carrito NO está vacío
     if(cart.length != 0){
         console.table(cart);
-
-        const cantidadProductos = document.getElementById("count_product");
         cantidadProductos.textContent = cart.length;
     }
     //si está vacío
     else{
         total = 0;
+        cantidadProductos.textContent = 0;
         console.log("carrito vacío")}
 
     printCart();
-    console.log("nuevo porducto agregado");
+    console.log("nuevo producto agregado");
 }
 
 // Exercise 2
 function cleanCart() {
     cart.length=0;
     total = 0;
-    const tabla = document.getElementById("cart_list");
-    const precioTotal = document.getElementById("total_price");
+    
     precioTotal.innerText = total;
     tabla.replaceChildren();
 
@@ -164,8 +170,6 @@ function applyPromotionsCart() {
         else{
             console.log("estos productos no tiene descuento");
         }
-        
-            
     }
     console.log("total final con descuentos aplicados a los productos pertientes = "+total + "€");
 }
@@ -176,8 +180,7 @@ function printCart() {
     total=0;
     applyPromotionsCart();
 
-    const tabla = document.getElementById("cart_list");
-    const precioTotal = document.getElementById("total_price");
+    
     console.table(cart);
     //eliminamos filas ya hechas de la tabla
     tabla.replaceChildren(); 
@@ -185,7 +188,6 @@ function printCart() {
     if(cart.length != 0){
         for(const productos of cart){
             if(tabla){
-                
                 //creamos filas hy elementos nuevos
                 const row = document.createElement("tr");
                 
@@ -239,20 +241,22 @@ function printCart() {
                 precioTotal.innerText = total;
              
             }
-            else console.log("tabla no inicializada");
-
-            
-            
+            else console.log("tabla no inicializada"); 
         }
     }
     else {
         precioTotal.innerText = 0;
         console.log("carrito vacío");
     }
+    cartLength();
+}
+function cartLength(){
+    cantidadProductos.textContent = cart.length;
 }
 
 
 function printButtons(id){
+    cartLength();
    
     const carrito = document.getElementById(`carrito-id-${id}`);
     total=0;
@@ -334,6 +338,7 @@ function updateQuantityDisplay(productoId) {
     const cantidadProducto = document.getElementById(`quantity-${productoId}`);
     if (producto && cantidadProducto) {
         cantidadProducto.textContent = producto.quantity;
+        printButtons();
     }
     
 }
