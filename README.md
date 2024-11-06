@@ -19,7 +19,7 @@ Només necessites un navegador web per executar l'aplicació.
 ## 🛠️ Instal·lació
 1. Clona el repositori:
    ```bash
-   git clone <url_del_repositori>
+   git clone <https://github.com/bertapasamontes/2.2.E-commerce>
    ```
 2. Obre el fitxer `index.html` amb el navegador.
 
