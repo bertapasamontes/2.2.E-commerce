@@ -148,7 +148,7 @@ function applyPromotionsCart() {
         productoDeCarrito.subtotalWithDiscount = 0;//precio final del producto con descuento 
 
         if(productoDeCarrito.offer){
-            if((productoDeCarrito.name == "cooking oil" && productoDeCarrito.quantity >=3) || (productoDeCarrito.name == "Instant cupcake mixture" && productoDeCarrito.quantity >=10) ){
+            if(productoDeCarrito.quantity >= productoDeCarrito.offer.number){
 
                 //conocer el precio del producto que tiene descuento * las cantidades compradas
                 precioProductoConDescuento = productoDeCarrito.price*productoDeCarrito.quantity;
@@ -157,8 +157,6 @@ function applyPromotionsCart() {
                 productoDeCarrito.subtotalWithDiscount = precioProductoConDescuento - (precioProductoConDescuento*productoDeCarrito.offer.percent/100);
 
                 console.log("% de descuento: "+productoDeCarrito.offer.percent);
-
-                
             }
             console.log("precio de los productos con descuento:") 
             console.log("precio del mismo producto:" +precioProductoConDescuento);
@@ -172,6 +170,7 @@ function applyPromotionsCart() {
         }
     }
     console.log("total final con descuentos aplicados a los productos pertientes = "+total + "€");
+    return total;
 }
 
 
