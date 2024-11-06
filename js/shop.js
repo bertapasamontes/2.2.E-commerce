@@ -251,7 +251,11 @@ function printCart() {
     cartLength();
 }
 function cartLength(){
-    cantidadProductos.textContent = cart.length;
+    let cantindadTotalProductos = 0;    for(const productos of cart){
+        cantindadTotalProductos += productos.quantity;
+    }
+
+    cantidadProductos.textContent = cantindadTotalProductos;
 }
 
 
